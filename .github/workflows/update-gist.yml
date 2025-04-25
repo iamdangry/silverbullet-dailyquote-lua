@@ -19,10 +19,16 @@ jobs:
           LUA_FILE="dailyquote.lua"
 
           LUA_BLOCK=$(printf '```space-lua\n%s\n```\n' "$(cat "$LUA_FILE")")
-          ESCAPED_BLOCK=$(printf '%s' "$LUA_BLOCK" | sed -e 's/[\/&]/\\&/g')
-
-          sed -i "s/{{lua-script}}/$ESCAPED_BLOCK/" "$MARKDOWN_FILE"
           
+          awk -v lua_block="$LUA_BLOCK" '
+          {
+            if ($0 ~ /{{lua-script}}/) {
+              print lua_block
+            } else {
+              print
+            }
+          }' "$MARKDOWN_FILE" > temp.md && mv temp.md "$MARKDOWN_FILE"
+
           FILE_CONTENT=$(jq -Rs . < "$MARKDOWN_FILE")
 
           # Define filename correctly for Gist
