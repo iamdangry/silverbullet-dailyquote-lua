@@ -1,4 +1,4 @@
-# meta
+#meta
 
 Description: Daily Quote plugin for SilverBullet
 Author: iamdangry
