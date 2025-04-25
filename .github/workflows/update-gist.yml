@@ -22,7 +22,9 @@ jobs:
           cat "$LUA_FILE" >> "$MARKDOWN_FILE"
           echo '```' >> "$MARKDOWN_FILE"
 
-          FILE_CONTENT=$(cat "$MARKDOWN_FILE" | jq -Rs .)
+          # Define filename correctly for Gist
+          FILENAME=$(basename "$MARKDOWN_FILE")
+          FILE_CONTENT=$(cat "$MARKDOWN_FILE" | jq -Rs .
 
           curl -X PATCH \
             -H "Authorization: token ${{ secrets.GIST_TOKEN }}" \
