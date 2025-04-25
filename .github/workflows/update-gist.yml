@@ -24,7 +24,7 @@ jobs:
 
           # Define filename correctly for Gist
           FILENAME="$MARKDOWN_FILE"
-          FILE_CONTENT=$(cat "$MARKDOWN_FILE" | jq -Rs .
+          FILE_CONTENT=$(cat "$MARKDOWN_FILE" | jq -Rs .)
 
           curl -X PATCH \
             -H "Authorization: token ${{ secrets.GIST_TOKEN }}" \
