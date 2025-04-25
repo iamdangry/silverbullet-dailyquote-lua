@@ -17,10 +17,13 @@ jobs:
         run: |
           MARKDOWN_FILE="dailyquote.md"
           LUA_FILE="dailyquote.lua"
-          echo '' >> "$MARKDOWN_FILE"
-          echo '```space-lua' >> "$MARKDOWN_FILE"
-          cat "$LUA_FILE" >> "$MARKDOWN_FILE"
-          echo '```' >> "$MARKDOWN_FILE"
+
+          LUA_BLOCK=$(printf '```space-lua\n%s\n```\n' "$(cat "$LUA_FILE")")
+          ESCAPED_BLOCK=$(printf '%s' "$LUA_BLOCK" | sed -e 's/[\/&]/\\&/g')
+
+          sed -i "s/{{lua-script}}/$ESCAPED_BLOCK/" "$MARKDOWN_FILE"
+          
+          FILE_CONTENT=$(jq -Rs . < "$MARKDOWN_FILE")
 
           # Define filename correctly for Gist
           FILENAME="$MARKDOWN_FILE"

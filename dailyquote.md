@@ -6,3 +6,4 @@ Version: 0.1.0
 License: MIT
 Repo: https://github.com/iamdangry/silverbullet-dailyquote-lua
 
+{{lua-script}}
