@@ -23,7 +23,7 @@ jobs:
           echo '```' >> "$MARKDOWN_FILE"
 
           # Define filename correctly for Gist
-          FILENAME=$(basename "$MARKDOWN_FILE")
+          FILENAME="$MARKDOWN_FILE"
           FILE_CONTENT=$(cat "$MARKDOWN_FILE" | jq -Rs .
 
           curl -X PATCH \
