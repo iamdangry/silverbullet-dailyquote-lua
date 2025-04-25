@@ -15,7 +15,7 @@ jobs:
 
       - name: Upload file to Gist
         run: |
-          FILE_PATH="path/to/file.lua"
+          FILE_PATH="dailyquote.lua"
           FILENAME=$(basename "$FILE_PATH")
           FILE_CONTENT=$(cat "$FILE_PATH" | jq -Rs .)
 
