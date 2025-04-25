@@ -3,7 +3,7 @@ name: Update Gist
 on:
   push:
     paths:
-      - dailyquote.md
+      - dailyquote.lua
   workflow_dispatch:
 
 jobs:
@@ -15,9 +15,14 @@ jobs:
 
       - name: Upload file to Gist
         run: |
-          FILE_PATH="dailyquote.md"
-          FILENAME=$(basename "$FILE_PATH")
-          FILE_CONTENT=$(cat "$FILE_PATH" | jq -Rs .)
+          MARKDOWN_FILE="dailyquote.md"
+          LUA_FILE="dailyquote.lua"
+          echo '' >> "$MARKDOWN_FILE"
+          echo '```lua' >> "$MARKDOWN_FILE"
+          cat "$LUA_FILE" >> "$MARKDOWN_FILE"
+          echo '```' >> "$MARKDOWN_FILE"
+
+          FILE_CONTENT=$(cat "$MARKDOWN_FILE" | jq -Rs .)
 
           curl -X PATCH \
             -H "Authorization: token ${{ secrets.GIST_TOKEN }}" \
