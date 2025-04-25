@@ -26,7 +26,7 @@ function importQuotes()
         editor.flashNotification("Importing quotes...")
         local quotes = http.request("https://raw.githubusercontent.com/iamdangry/silverbullet-dailyquote/refs/heads/main/quotes.json")
         if quotes then
-            json = space.writeFile("quotes.json", quotes)
+            json = space.writeFile("_plugs/quotes.json", quotes)
             if json then
                 dailyQuote.quotes = json
                 editor.flashNotification("Quotes imported successfully!")
