@@ -18,7 +18,7 @@ jobs:
           MARKDOWN_FILE="dailyquote.md"
           LUA_FILE="dailyquote.lua"
           echo '' >> "$MARKDOWN_FILE"
-          echo '```lua' >> "$MARKDOWN_FILE"
+          echo '```space-lua' >> "$MARKDOWN_FILE"
           cat "$LUA_FILE" >> "$MARKDOWN_FILE"
           echo '```' >> "$MARKDOWN_FILE"
 
