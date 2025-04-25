@@ -21,7 +21,7 @@ command.define {
     end
 }
 
-function importQuotes()
+local function importQuotes()
     if not space.fileExists("quotes.json") then
         editor.flashNotification("Importing quotes...")
         local quotes = http.request("https://raw.githubusercontent.com/iamdangry/silverbullet-dailyquote/refs/heads/main/quotes.json")
