@@ -1,0 +1,26 @@
+name: Update Gist
+
+on:
+  push:
+    paths:
+      - dailyquote.lua
+  workflow_dispatch:
+
+jobs:
+  update-gist:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Upload file to Gist
+        run: |
+          FILE_PATH="path/to/file.lua"
+          FILENAME=$(basename "$FILE_PATH")
+          FILE_CONTENT=$(cat "$FILE_PATH" | jq -Rs .)
+
+          curl -X PATCH \
+            -H "Authorization: token ${{ secrets.GIST_TOKEN }}" \
+            -H "Accept: application/vnd.github+json" \
+            https://api.github.com/gists/8122aef99cae4076d83e77862df46076 \
+            -d "{\"files\": {\"$FILENAME\": {\"content\": $FILE_CONTENT}}}"
