@@ -10,6 +10,6 @@ dailyQuote.excludeAuthors = dailyQuote.excludeAuthors or {}
 command.define {
     name = "Daily Quote: Version",
     run = function()
-        editor.flashNotification "Version: " .. version
+        editor.flashNotification("Version: " .. version)
     end
 }
