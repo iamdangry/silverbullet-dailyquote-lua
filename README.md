@@ -1,1 +1,1 @@
-# silverbullet-dailyquote-lua
+# SilverBullet Daily Quote LUA
