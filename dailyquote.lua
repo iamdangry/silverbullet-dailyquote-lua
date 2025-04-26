@@ -1,5 +1,12 @@
 local version = "0.1.0"
 
+command.define {
+    name = "Daily Quote: Version",
+    run = function()
+        editor.flashNotification("Version: " .. version)
+    end
+}
+
 local function fetchQuotes()
     local response = http.request("https://iamdangry.github.io/silverbullet-dailyquote-lua/quotes.json", {
       headers = {
