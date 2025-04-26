@@ -1,47 +1,32 @@
 local version = "0.1.0"
 
-dailyQuote = {}
-dailyQuote.config = config.get("dailyquote", {})
-dailyQuote.includeTags = dailyQuote.includeTags or {}
-dailyQuote.excludeTags = dailyQuote.excludeTags or {}
-dailyQuote.includeAuthors = dailyQuote.includeAuthors or {}
-dailyQuote.excludeAuthors = dailyQuote.excludeAuthors or {}
-
-command.define {
-    name = "Daily Quote: Version",
-    run = function()
-        editor.flashNotification("Version: " .. version)
+local function fetchQuotes()
+    local response = http.request("https://iamdangry.github.io/silverbullet-dailyquote-lua/quotes.json", {
+      headers = {
+        Accept = "application/json"
+      }
+    })
+    if not response or not response.body then
+        print("No response or no body")
+        return {}
     end
-}
-
-command.define {
-    name = "Daily Quote: Import",
-    run = function()
-        importQuotes()
-    end
-}
-
-local function importQuotes()
-    if not space.fileExists("quotes.json") then
-        editor.flashNotification("Importing quotes...")
-        local quotes = http.request("https://raw.githubusercontent.com/iamdangry/silverbullet-dailyquote/refs/heads/main/quotes.json")
-        if quotes then
-            json = space.writeFile("_plugs/quotes.json", quotes)
-            if json then
-                dailyQuote.quotes = json
-                editor.flashNotification("Quotes imported successfully!")
-            else
-                editor.flashNotification("Failed to parse quotes.")
-            end
-        else
-            editor.flashNotification("Failed to fetch quotes.")
-        end
-    end
+    local quotes = response.body
+    return quotes
 end
 
-event.listen {
-    name = "system:ready",
-    run = function()
-        importQuotes()
+-- Pick a random quote from parsed quotes
+function random_quote()
+    local quotes = fetchQuotes()
+    if #quotes == 0 then
+        return nil
     end
-}
+    local quote = quotes[math.random(1, #quotes)]
+        local template = [[
+> **quote** Quote
+> ]] .. quote.content .. [[
+
+> — ]] .. quote.author .. [[
+]]
+    print(quote)
+    return template
+end
